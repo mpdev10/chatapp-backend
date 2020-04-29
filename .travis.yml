@@ -9,3 +9,5 @@ cache:
     - $HOME/.gradle/wrapper/
 notifications:
   slack: pakolkamu:bO0wE2yTRBfTrj38lWtxIiyN
+    on_success: always
+    on_failure: always
