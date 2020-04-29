@@ -8,4 +8,4 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 notifications:
-  slack: pakolkamu:FqfqWV9CA2QKh8B2sXcTtYkD
+  email: false
