@@ -10,6 +10,6 @@ cache:
 notifications:
   slack:
     rooms:
-      - pakolkamu:bO0wE2yTRBfTrj38lWtxIiyN
+      - pakolkamu:FqfqWV9CA2QKh8B2sXcTtYkD#chatapp-travis
     on_success: always
     on_failure: always
