@@ -9,6 +9,7 @@ cache:
     - $HOME/.gradle/wrapper/
 notifications:
   slack:
+    enabled: true
     rooms:
       - pakolkamu:FqfqWV9CA2QKh8B2sXcTtYkD#chatapp-travis
     on_success: always
