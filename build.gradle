@@ -37,3 +37,10 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+flyway {
+    url = System.properties.getProperty("JDBC_DATABASE_URL")
+    user = System.properties.getProperty("JDBC_DATABASE_USERNAME")
+    password = System.properties.getProperty("JDBC_DATABASE_PASSWORD")
+    schemas = ['APP']
+}
