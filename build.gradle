@@ -2,7 +2,6 @@ plugins {
     id 'org.springframework.boot' version '2.2.6.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
-    id "org.flywaydb.flyway" version "6.4.1"
 }
 
 group = 'com.mpkd'
@@ -24,6 +23,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.flywaydb:flyway-core'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     runtimeOnly 'com.h2database:h2'
@@ -36,11 +36,4 @@ dependencies {
 
 test {
     useJUnitPlatform()
-}
-
-flyway {
-    url = System.properties.getProperty("JDBC_DATABASE_URL")
-    user = System.properties.getProperty("JDBC_DATABASE_USERNAME")
-    password = System.properties.getProperty("JDBC_DATABASE_PASSWORD")
-    schemas = ['APP']
 }
