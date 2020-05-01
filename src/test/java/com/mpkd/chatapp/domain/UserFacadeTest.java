@@ -16,7 +16,7 @@ class UserFacadeTest {
 
     private static void postUser(String email, String password) {
         var userFacade = new UserConfiguration().userFacade();
-        var user = new CreateUserDTO(email, password);
+        var user = UserDTO.newInstancePlaintextPassword(email, password);
         userFacade.postUser(user);
     }
 
@@ -53,7 +53,7 @@ class UserFacadeTest {
     @Test
     void postUser_validEmailValidPassword_userIsSaved() {
         var userFacade = new UserConfiguration().userFacade();
-        var user = new CreateUserDTO(VALID_EMAIL, VALID_PASSWORD);
+        var user = UserDTO.newInstancePlaintextPassword(VALID_EMAIL, VALID_PASSWORD);
         userFacade.postUser(user);
         var fetchedUser = userFacade.getUser(user.getEmail());
         assertThat(fetchedUser.getEmail()).isEqualTo(user.getEmail());
@@ -62,7 +62,7 @@ class UserFacadeTest {
     @Test
     void postUser_userAlreadyExists_throwsException() {
         var userFacade = new UserConfiguration().userFacade();
-        var user = new CreateUserDTO(VALID_EMAIL, VALID_PASSWORD);
+        var user = UserDTO.newInstancePlaintextPassword(VALID_EMAIL, VALID_PASSWORD);
         userFacade.postUser(user);
         assertThrows(UserAlreadyExistsException.class, () -> userFacade.postUser(user));
 

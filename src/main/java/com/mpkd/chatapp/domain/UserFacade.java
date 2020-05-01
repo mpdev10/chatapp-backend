@@ -2,7 +2,7 @@ package com.mpkd.chatapp.domain;
 
 public interface UserFacade {
 
-    void postUser(CreateUserDTO user);
+    void postUser(UserDTO user);
 
     UserDTO getUser(String email);
 

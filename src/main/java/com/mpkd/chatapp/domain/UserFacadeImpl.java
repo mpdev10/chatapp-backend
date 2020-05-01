@@ -36,7 +36,7 @@ class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public void postUser(CreateUserDTO user) {
+    public void postUser(UserDTO user) {
         Set<ErrorCode> errors = Sets.newHashSet();
         checkEmailErrors(user.getEmail()).ifPresent(errors::add);
         checkPasswordErrors(user.getPassword()).ifPresent(errors::add);
@@ -51,7 +51,7 @@ class UserFacadeImpl implements UserFacade {
 
     @Override
     public UserDTO getUser(String email) {
-        return userRepository.findByEmail(email).map(UserDTO::new)
+        return userRepository.findByEmail(email).map(UserMapper::toDTO)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
     }
 
