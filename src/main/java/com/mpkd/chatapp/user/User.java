@@ -13,7 +13,7 @@ import javax.persistence.*;
 @SequenceGenerator(name = "ID_GEN", sequenceName = "USERS_SEQ", allocationSize = 1)
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends BaseEntity {
+class User extends BaseEntity {
 
     @Column(unique = true, nullable = false)
     private String email;
