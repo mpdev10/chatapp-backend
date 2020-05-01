@@ -1,16 +1,15 @@
-package com.mpkd.chatapp.user;
+package com.mpkd.chatapp.domain;
 
 import com.mpkd.chatapp.common.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 @Entity
 @Getter
-@Table(name = "USERS", indexes = {@Index(columnList = "id", unique = true)})
-@SequenceGenerator(name = "ID_GEN", sequenceName = "USERS_SEQ", allocationSize = 1)
 @AllArgsConstructor
 @NoArgsConstructor
 class User extends BaseEntity {
