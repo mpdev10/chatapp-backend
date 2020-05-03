@@ -1,4 +1,4 @@
-package com.mpkd.chatapp.common;
+package com.mpkd.chatapp.domain.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

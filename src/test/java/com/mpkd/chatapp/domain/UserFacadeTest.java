@@ -1,8 +1,9 @@
 package com.mpkd.chatapp.domain;
 
 import com.mpkd.chatapp.common.ErrorCode;
-import com.mpkd.chatapp.common.InvalidUserDataException;
-import com.mpkd.chatapp.common.UserAlreadyExistsException;
+import com.mpkd.chatapp.domain.dto.UserDTO;
+import com.mpkd.chatapp.domain.exception.InvalidUserDataException;
+import com.mpkd.chatapp.domain.exception.UserAlreadyExistsException;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 

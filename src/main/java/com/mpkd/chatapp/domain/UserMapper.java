@@ -1,5 +1,6 @@
 package com.mpkd.chatapp.domain;
 
+import com.mpkd.chatapp.domain.dto.UserDTO;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

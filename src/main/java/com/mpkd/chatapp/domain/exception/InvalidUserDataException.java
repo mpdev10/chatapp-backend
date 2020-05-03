@@ -1,5 +1,7 @@
-package com.mpkd.chatapp.common;
+package com.mpkd.chatapp.domain.exception;
 
+
+import com.mpkd.chatapp.common.ErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
