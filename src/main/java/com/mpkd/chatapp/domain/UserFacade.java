@@ -1,6 +1,8 @@
 package com.mpkd.chatapp.domain;
 
-public interface UserFacade {
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+public interface UserFacade extends UserDetailsService {
 
     void postUser(UserDTO user);
 

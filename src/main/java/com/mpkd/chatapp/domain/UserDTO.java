@@ -1,13 +1,15 @@
 package com.mpkd.chatapp.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class UserDTO {
 
-    private final String email;
-    private final String password;
-    private final String encryptedPassword;
+    private String email;
+    private String password;
+    private String encryptedPassword;
 
     public UserDTO(String email, String password, String encryptedPassword) {
         this.email = email;

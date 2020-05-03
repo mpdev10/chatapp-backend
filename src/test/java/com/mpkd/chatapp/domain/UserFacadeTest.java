@@ -4,6 +4,7 @@ import com.mpkd.chatapp.common.ErrorCode;
 import com.mpkd.chatapp.common.InvalidUserDataException;
 import com.mpkd.chatapp.common.UserAlreadyExistsException;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -65,6 +66,21 @@ class UserFacadeTest {
         var user = UserDTO.newInstancePlaintextPassword(VALID_EMAIL, VALID_PASSWORD);
         userFacade.postUser(user);
         assertThrows(UserAlreadyExistsException.class, () -> userFacade.postUser(user));
-
     }
+
+    @Test
+    void loadByUserName_userDoesntExist_throwsException() {
+        var userFacade = new UserConfiguration().userFacade();
+        assertThrows(UsernameNotFoundException.class, () -> userFacade.loadUserByUsername(VALID_EMAIL));
+    }
+
+    @Test
+    void loadByUserName_userExists_userDetailsAreValid() {
+        var userFacade = new UserConfiguration().userFacade();
+        var user = UserDTO.newInstancePlaintextPassword(VALID_EMAIL, VALID_PASSWORD);
+        userFacade.postUser(user);
+        var userDetails = userFacade.loadUserByUsername(user.getEmail());
+        assertThat(userDetails.getUsername()).isEqualTo(user.getEmail());
+    }
+
 }
