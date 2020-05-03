@@ -2,10 +2,14 @@ package com.mpkd.chatapp.domain;
 
 import com.google.common.collect.Sets;
 import com.mpkd.chatapp.common.ErrorCode;
-import com.mpkd.chatapp.common.InvalidUserDataException;
 import com.mpkd.chatapp.common.ResourceNotFoundException;
-import com.mpkd.chatapp.common.UserAlreadyExistsException;
+import com.mpkd.chatapp.domain.dto.UserDTO;
+import com.mpkd.chatapp.domain.exception.InvalidUserDataException;
+import com.mpkd.chatapp.domain.exception.UserAlreadyExistsException;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 import java.util.Set;
@@ -16,9 +20,11 @@ import static java.util.Objects.isNull;
 class UserFacadeImpl implements UserFacade {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    UserFacadeImpl(UserRepository userRepository) {
+    UserFacadeImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     private static Optional<ErrorCode> checkEmailErrors(String email) {
@@ -36,7 +42,7 @@ class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public void postUser(CreateUserDTO user) {
+    public void postUser(UserDTO user) {
         Set<ErrorCode> errors = Sets.newHashSet();
         checkEmailErrors(user.getEmail()).ifPresent(errors::add);
         checkPasswordErrors(user.getPassword()).ifPresent(errors::add);
@@ -46,13 +52,18 @@ class UserFacadeImpl implements UserFacade {
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new UserAlreadyExistsException(user.getEmail());
         }
-        userRepository.save(new User(user.getEmail(), user.getPassword()));
+        userRepository.save(new User(user.getEmail(), passwordEncoder.encode(user.getPassword())));
     }
 
     @Override
     public UserDTO getUser(String email) {
-        return userRepository.findByEmail(email).map(UserDTO::new)
+        return userRepository.findByEmail(email).map(UserMapper::toDTO)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String email) {
+        return userRepository.findByEmail(email).map(UserMapper::toDetails)
+                .orElseThrow(() -> new UsernameNotFoundException(email));
+    }
 }

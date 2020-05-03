@@ -13,7 +13,7 @@ import java.util.Optional;
 @SuppressWarnings("all")
 class InMemoryUserRepository implements UserRepository {
 
-    Map<String, User> userMap = Maps.newConcurrentMap();
+    private Map<String, User> userMap = Maps.newConcurrentMap();
 
     @Override
     public Optional<User> findByEmail(String email) {
