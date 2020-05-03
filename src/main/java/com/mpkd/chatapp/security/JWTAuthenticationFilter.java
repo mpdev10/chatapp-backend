@@ -17,14 +17,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
-import static com.mpkd.chatapp.security.SecurityConstants.*;
-
 class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
+    private final SecurityProperties properties;
 
-    JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+    JWTAuthenticationFilter(AuthenticationManager authenticationManager, SecurityProperties properties) {
         this.authenticationManager = authenticationManager;
+        this.properties = properties;
     }
 
     @Override
@@ -51,8 +51,8 @@ class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                             Authentication authResult) {
         String token = JWT.create()
                 .withSubject(((UserDetails) authResult.getPrincipal()).getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .sign(Algorithm.HMAC512(SECRET.getBytes()));
-        response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+                .withExpiresAt(new Date(System.currentTimeMillis() + properties.getExpirationTime()))
+                .sign(Algorithm.HMAC512(properties.getSecret().getBytes()));
+        response.addHeader(properties.getTokenHeader(), properties.getTokenPrefix() + token);
     }
 }

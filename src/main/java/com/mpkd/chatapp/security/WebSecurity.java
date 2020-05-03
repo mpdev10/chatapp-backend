@@ -18,10 +18,12 @@ class WebSecurity extends WebSecurityConfigurerAdapter {
 
     private final UserFacade userFacade;
     private final PasswordEncoder passwordEncoder;
+    private final SecurityProperties securityProperties;
 
-    WebSecurity(UserFacade userFacade, PasswordEncoder passwordEncoder) {
+    WebSecurity(UserFacade userFacade, PasswordEncoder passwordEncoder, SecurityProperties securityProperties) {
         this.userFacade = userFacade;
         this.passwordEncoder = passwordEncoder;
+        this.securityProperties = securityProperties;
     }
 
     @Override
@@ -35,8 +37,8 @@ class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/user/post").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), securityProperties))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager(), securityProperties))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 

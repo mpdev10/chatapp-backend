@@ -16,23 +16,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-import static com.mpkd.chatapp.security.SecurityConstants.*;
 import static java.util.Objects.isNull;
 
 class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-    JWTAuthorizationFilter(AuthenticationManager authManager) {
+    private final SecurityProperties properties;
+
+    JWTAuthorizationFilter(AuthenticationManager authManager, SecurityProperties properties) {
         super(authManager);
+        this.properties = properties;
     }
 
-    private static UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        String token = request.getHeader(HEADER_STRING);
+    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
+        String token = request.getHeader(properties.getTokenHeader());
         if (isNull(token)) {
             return null;
         }
-        String user = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
+        String user = JWT.require(Algorithm.HMAC512(properties.getSecret().getBytes()))
                 .build()
-                .verify(token.replace(TOKEN_PREFIX, ""))
+                .verify(token.replace(properties.getTokenPrefix(), ""))
                 .getSubject();
         return Optional.ofNullable(user)
                 .map(u -> new UsernamePasswordAuthenticationToken(u, null, Lists.newArrayList()))
@@ -43,8 +45,8 @@ class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
-        String header = Strings.nullToEmpty(request.getHeader(HEADER_STRING));
-        if (header.startsWith(TOKEN_PREFIX)) {
+        String header = Strings.nullToEmpty(request.getHeader(properties.getTokenHeader()));
+        if (header.startsWith(properties.getTokenPrefix())) {
             var authentication = getAuthentication(request);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
