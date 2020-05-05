@@ -12,12 +12,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.annotation.Nonnull;
+
 @EnableWebSecurity
 class WebSecurity extends WebSecurityConfigurerAdapter {
 
     private final UserFacade userFacade;
     private final PasswordEncoder passwordEncoder;
     private final SecurityProperties securityProperties;
+    private static final String[] AUTH_WHITELIST = {
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+    };
 
     WebSecurity(UserFacade userFacade, PasswordEncoder passwordEncoder, SecurityProperties securityProperties) {
         this.userFacade = userFacade;
@@ -34,6 +45,7 @@ class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/user/post").permitAll()
+                .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(), securityProperties))
@@ -45,7 +57,7 @@ class WebSecurity extends WebSecurityConfigurerAdapter {
     WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry) {
+            public void addCorsMappings(@Nonnull CorsRegistry registry) {
                 registry.addMapping("/**").allowedMethods("*");
             }
         };
