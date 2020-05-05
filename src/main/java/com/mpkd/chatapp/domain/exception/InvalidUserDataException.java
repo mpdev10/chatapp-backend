@@ -13,7 +13,13 @@ import java.util.Set;
 @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 public class InvalidUserDataException extends RuntimeException {
 
+    public static final String MESSAGE_PREFIX = "Invalid user data: ";
+
     @Getter
     private final Set<ErrorCode> errorCodes;
 
+    @Override
+    public String getMessage() {
+        return MESSAGE_PREFIX + errorCodes.stream().map(ErrorCode::getMessage).reduce((x, y) -> x + ", " + y).orElse("");
+    }
 }

@@ -9,12 +9,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 class UserMapper {
 
     static UserDTO toDTO(User user) {
-        return UserDTO.newInstanceEncryptedPassword(user.getEmail(), user.getPassword());
+        return UserDTO.builder()
+                .name(user.getName())
+                .email(user.getEmail())
+                .encryptedPassword(user.getPassword())
+                .build();
     }
 
     static UserDetails toDetails(User user) {
         return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getEmail())
+                .username(user.getName())
                 .password(user.getPassword())
                 .accountExpired(false)
                 .accountLocked(false)
@@ -24,6 +28,4 @@ class UserMapper {
                 .build();
 
     }
-
-
 }
