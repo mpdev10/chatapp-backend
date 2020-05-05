@@ -1,15 +1,15 @@
 package com.mpkd.chatapp.domain;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-interface UserRepository extends JpaRepository<User, Long> {
+interface UserRepository extends CrudRepository<User, Long> {
 
-    Optional<User> findByEmail(String email);
+    Optional<User> findByName(String name);
 
-    boolean existsByEmail(String email);
+    boolean existsByName(String name);
 
 }

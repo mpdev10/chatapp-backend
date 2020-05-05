@@ -27,6 +27,10 @@ class UserFacadeImpl implements UserFacade {
         this.passwordEncoder = passwordEncoder;
     }
 
+    private static Optional<ErrorCode> checkNameErrors(String name) {
+        return isNull(name) ? Optional.of(NULL_NAME) : Optional.empty();
+    }
+
     private static Optional<ErrorCode> checkEmailErrors(String email) {
         if (isNull(email)) {
             return Optional.of(NULL_EMAIL);
@@ -44,26 +48,32 @@ class UserFacadeImpl implements UserFacade {
     @Override
     public void postUser(UserDTO user) {
         Set<ErrorCode> errors = Sets.newHashSet();
+        checkNameErrors(user.getName()).ifPresent(errors::add);
         checkEmailErrors(user.getEmail()).ifPresent(errors::add);
         checkPasswordErrors(user.getPassword()).ifPresent(errors::add);
         if (!errors.isEmpty()) {
             throw new InvalidUserDataException(errors);
         }
-        if (userRepository.existsByEmail(user.getEmail())) {
-            throw new UserAlreadyExistsException(user.getEmail());
+        if (userRepository.existsByName(user.getName())) {
+            throw new UserAlreadyExistsException(user.getName());
         }
-        userRepository.save(new User(user.getEmail(), passwordEncoder.encode(user.getPassword())));
+        userRepository.save(User.builder()
+                .email(user.getEmail())
+                .password(passwordEncoder.encode(user.getPassword()))
+                .name(user.getName())
+                .build()
+        );
     }
 
     @Override
     public UserDTO getUser(String email) {
-        return userRepository.findByEmail(email).map(UserMapper::toDTO)
+        return userRepository.findByName(email).map(UserMapper::toDTO)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) {
-        return userRepository.findByEmail(email).map(UserMapper::toDetails)
-                .orElseThrow(() -> new UsernameNotFoundException(email));
+    public UserDetails loadUserByUsername(String name) {
+        return userRepository.findByName(name).map(UserMapper::toDetails)
+                .orElseThrow(() -> new UsernameNotFoundException(name));
     }
 }

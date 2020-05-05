@@ -1,27 +1,20 @@
 package com.mpkd.chatapp.domain.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserDTO {
 
-    private String email;
+    private String name;
     private String password;
     private String encryptedPassword;
+    private String email;
 
-    public UserDTO(String email, String password, String encryptedPassword) {
-        this.email = email;
-        this.password = password;
-        this.encryptedPassword = encryptedPassword;
-    }
-
-    public static UserDTO newInstancePlaintextPassword(String email, String password) {
-        return new UserDTO(email, password, null);
-    }
-
-    public static UserDTO newInstanceEncryptedPassword(String email, String encryptedPassword) {
-        return new UserDTO(email, null, encryptedPassword);
-    }
 }
+
