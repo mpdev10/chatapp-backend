@@ -9,11 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDTO {
+public final class UserDTO {
 
     private String name;
     private String password;
-    private String encryptedPassword;
     private String email;
 
 }
