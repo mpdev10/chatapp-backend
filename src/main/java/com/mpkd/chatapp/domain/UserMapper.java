@@ -12,7 +12,6 @@ class UserMapper {
         return UserDTO.builder()
                 .name(user.getName())
                 .email(user.getEmail())
-                .encryptedPassword(user.getPassword())
                 .build();
     }
 

@@ -27,6 +27,18 @@ class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         this.properties = properties;
     }
 
+    @Override
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain chain) throws IOException, ServletException {
+        String header = Strings.nullToEmpty(request.getHeader(properties.getTokenHeader()));
+        if (header.startsWith(properties.getTokenPrefix())) {
+            var authentication = getAuthentication(request);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+        chain.doFilter(request, response);
+    }
+
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(properties.getTokenHeader());
         if (isNull(token)) {
@@ -39,17 +51,5 @@ class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         return Optional.ofNullable(user)
                 .map(u -> new UsernamePasswordAuthenticationToken(u, null, Lists.newArrayList()))
                 .orElse(null);
-    }
-
-    @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain chain) throws IOException, ServletException {
-        String header = Strings.nullToEmpty(request.getHeader(properties.getTokenHeader()));
-        if (header.startsWith(properties.getTokenPrefix())) {
-            var authentication = getAuthentication(request);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
-        chain.doFilter(request, response);
     }
 }
