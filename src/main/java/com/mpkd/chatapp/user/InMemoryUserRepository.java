@@ -1,4 +1,4 @@
-package com.mpkd.chatapp.domain;
+package com.mpkd.chatapp.user;
 
 import com.google.common.collect.Maps;
 

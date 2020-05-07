@@ -1,4 +1,4 @@
-package com.mpkd.chatapp.security;
+package com.mpkd.chatapp.infrastructure.security;
 
 import lombok.Getter;
 import lombok.Setter;

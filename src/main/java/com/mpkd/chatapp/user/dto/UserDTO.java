@@ -1,4 +1,4 @@
-package com.mpkd.chatapp.domain.dto;
+package com.mpkd.chatapp.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

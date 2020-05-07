@@ -1,4 +1,4 @@
-package com.mpkd.chatapp.domain.exception;
+package com.mpkd.chatapp.user.exception;
 
 
 import com.mpkd.chatapp.common.ErrorCode;

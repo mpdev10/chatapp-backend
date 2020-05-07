@@ -1,10 +1,10 @@
-package com.mpkd.chatapp.security;
+package com.mpkd.chatapp.infrastructure.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
-import com.mpkd.chatapp.domain.dto.UserDTO;
+import com.mpkd.chatapp.user.dto.UserDTO;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

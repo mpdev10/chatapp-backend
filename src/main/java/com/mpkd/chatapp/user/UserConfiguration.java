@@ -1,4 +1,4 @@
-package com.mpkd.chatapp.domain;
+package com.mpkd.chatapp.user;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

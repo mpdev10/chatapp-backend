@@ -1,6 +1,6 @@
-package com.mpkd.chatapp.domain;
+package com.mpkd.chatapp.user;
 
-import com.mpkd.chatapp.domain.dto.UserDTO;
+import com.mpkd.chatapp.user.dto.UserDTO;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;

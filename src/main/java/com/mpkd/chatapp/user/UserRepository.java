@@ -1,4 +1,4 @@
-package com.mpkd.chatapp.domain;
+package com.mpkd.chatapp.user;
 
 import org.springframework.data.repository.Repository;
 

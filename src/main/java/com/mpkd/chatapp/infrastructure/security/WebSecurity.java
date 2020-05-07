@@ -1,6 +1,6 @@
-package com.mpkd.chatapp.security;
+package com.mpkd.chatapp.infrastructure.security;
 
-import com.mpkd.chatapp.domain.UserFacade;
+import com.mpkd.chatapp.user.UserFacade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

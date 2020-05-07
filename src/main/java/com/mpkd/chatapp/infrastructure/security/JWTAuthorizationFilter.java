@@ -1,4 +1,4 @@
-package com.mpkd.chatapp.security;
+package com.mpkd.chatapp.infrastructure.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

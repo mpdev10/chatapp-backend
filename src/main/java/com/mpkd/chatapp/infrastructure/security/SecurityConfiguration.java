@@ -1,4 +1,4 @@
-package com.mpkd.chatapp.security;
+package com.mpkd.chatapp.infrastructure.security;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;

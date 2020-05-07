@@ -1,4 +1,4 @@
-package com.mpkd.chatapp.domain;
+package com.mpkd.chatapp.user;
 
 import com.mpkd.chatapp.common.BaseEntity;
 import lombok.AllArgsConstructor;

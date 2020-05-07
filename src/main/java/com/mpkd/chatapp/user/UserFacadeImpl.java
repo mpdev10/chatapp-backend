@@ -1,11 +1,11 @@
-package com.mpkd.chatapp.domain;
+package com.mpkd.chatapp.user;
 
 import com.google.common.collect.Sets;
 import com.mpkd.chatapp.common.ErrorCode;
 import com.mpkd.chatapp.common.ResourceNotFoundException;
-import com.mpkd.chatapp.domain.dto.UserDTO;
-import com.mpkd.chatapp.domain.exception.InvalidUserDataException;
-import com.mpkd.chatapp.domain.exception.UserAlreadyExistsException;
+import com.mpkd.chatapp.user.dto.UserDTO;
+import com.mpkd.chatapp.user.exception.InvalidUserDataException;
+import com.mpkd.chatapp.user.exception.UserAlreadyExistsException;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

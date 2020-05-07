@@ -1,6 +1,6 @@
-package com.mpkd.chatapp.domain;
+package com.mpkd.chatapp.user;
 
-import com.mpkd.chatapp.domain.dto.UserDTO;
+import com.mpkd.chatapp.user.dto.UserDTO;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserFacade extends UserDetailsService {

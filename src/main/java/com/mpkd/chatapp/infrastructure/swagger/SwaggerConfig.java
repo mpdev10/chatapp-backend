@@ -1,4 +1,4 @@
-package com.mpkd.chatapp.swagger;
+package com.mpkd.chatapp.infrastructure.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
