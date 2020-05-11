@@ -18,11 +18,15 @@ class UserFacadeTest {
     private static final String VALID_NAME = "username";
     private static final String VALID_PASSWORD = "password";
 
-
     private static void postUser(String name, String email, String password) {
+        getNewFacadeAndPostUser(name, email, password);
+    }
+
+    private static UserFacade getNewFacadeAndPostUser(String userName, String email, String password) {
         var userFacade = new UserConfiguration().userFacade();
-        var user = UserDTO.builder().name(name).email(email).password(password).build();
+        var user = UserDTO.builder().name(userName).email(email).password(password).build();
         userFacade.postUser(user);
+        return userFacade;
     }
 
     @Test
@@ -116,4 +120,15 @@ class UserFacadeTest {
         assertThat(userDetails.getUsername()).isEqualTo(user.getName());
     }
 
+    @Test
+    void userExists_userNotPresent_returnsFalse() {
+        var userFacade = new UserConfiguration().userFacade();
+        assertThat(userFacade.userExists(VALID_NAME)).isFalse();
+    }
+
+    @Test
+    void userExists_userIsPresent_returnsTrue() {
+        var userFacade = getNewFacadeAndPostUser(VALID_NAME, VALID_EMAIL, VALID_PASSWORD);
+        assertThat(userFacade.userExists(VALID_NAME)).isTrue();
+    }
 }

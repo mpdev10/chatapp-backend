@@ -72,6 +72,11 @@ class UserFacadeImpl implements UserFacade {
     }
 
     @Override
+    public boolean userExists(String name) {
+        return userRepository.existsByName(name);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String name) {
         return userRepository.findByName(name).map(UserMapper::toDetails)
                 .orElseThrow(() -> new UsernameNotFoundException(name));

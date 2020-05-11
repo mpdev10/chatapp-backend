@@ -9,4 +9,5 @@ public interface UserFacade extends UserDetailsService {
 
     UserDTO getUser(String email);
 
+    boolean userExists(String name);
 }
